@@ -1,0 +1,192 @@
+import type { Express } from "express";
+import { createServer, type Server } from "http";
+import { storage } from "./storage";
+import { insertOrderSchema, insertOrderItemSchema } from "@shared/schema";
+import { z } from "zod";
+
+const createOrderRequestSchema = z.object({
+  restaurantId: z.number(),
+  deliveryAddress: z.string(),
+  items: z.array(z.object({
+    menuItemId: z.number(),
+    quantity: z.number().min(1),
+  })),
+});
+
+export async function registerRoutes(app: Express): Promise<Server> {
+  // Restaurant routes
+  app.get("/api/restaurants", async (req, res) => {
+    try {
+      const { category, search } = req.query;
+      
+      let restaurants;
+      if (search && typeof search === "string") {
+        restaurants = await storage.searchRestaurants(search);
+      } else if (category && typeof category === "string" && category !== "all") {
+        restaurants = await storage.getRestaurantsByCategory(category);
+      } else {
+        restaurants = await storage.getRestaurants();
+      }
+      
+      res.json(restaurants);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch restaurants" });
+    }
+  });
+
+  app.get("/api/restaurants/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const restaurant = await storage.getRestaurant(id);
+      
+      if (!restaurant) {
+        return res.status(404).json({ message: "Restaurant not found" });
+      }
+      
+      res.json(restaurant);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch restaurant" });
+    }
+  });
+
+  // Menu routes
+  app.get("/api/restaurants/:id/menu", async (req, res) => {
+    try {
+      const restaurantId = parseInt(req.params.id);
+      const { category } = req.query;
+      
+      let menuItems;
+      if (category && typeof category === "string") {
+        menuItems = await storage.getMenuItemsByCategory(restaurantId, category);
+      } else {
+        menuItems = await storage.getMenuItemsByRestaurant(restaurantId);
+      }
+      
+      res.json(menuItems);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch menu items" });
+    }
+  });
+
+  app.get("/api/menu-items/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const menuItem = await storage.getMenuItem(id);
+      
+      if (!menuItem) {
+        return res.status(404).json({ message: "Menu item not found" });
+      }
+      
+      res.json(menuItem);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch menu item" });
+    }
+  });
+
+  // Order routes
+  app.post("/api/orders", async (req, res) => {
+    try {
+      const orderData = createOrderRequestSchema.parse(req.body);
+      
+      // Calculate total
+      let total = 0;
+      for (const item of orderData.items) {
+        const menuItem = await storage.getMenuItem(item.menuItemId);
+        if (!menuItem) {
+          return res.status(400).json({ message: `Menu item ${item.menuItemId} not found` });
+        }
+        total += parseFloat(menuItem.price) * item.quantity;
+      }
+
+      // Get delivery fee
+      const restaurant = await storage.getRestaurant(orderData.restaurantId);
+      if (!restaurant) {
+        return res.status(400).json({ message: "Restaurant not found" });
+      }
+      
+      total += parseFloat(restaurant.deliveryFee);
+      
+      // Add tax (8%)
+      const tax = total * 0.08;
+      total += tax;
+
+      // Create order
+      const order = await storage.createOrder({
+        restaurantId: orderData.restaurantId,
+        status: "confirmed",
+        total: total.toFixed(2),
+        deliveryAddress: orderData.deliveryAddress,
+        estimatedDeliveryTime: "25-35 min",
+      });
+
+      // Create order items
+      for (const item of orderData.items) {
+        const menuItem = await storage.getMenuItem(item.menuItemId);
+        if (menuItem) {
+          await storage.createOrderItem({
+            orderId: order.id,
+            menuItemId: item.menuItemId,
+            quantity: item.quantity,
+            price: menuItem.price,
+          });
+        }
+      }
+
+      const orderWithItems = await storage.getOrder(order.id);
+      res.status(201).json(orderWithItems);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid order data", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to create order" });
+    }
+  });
+
+  app.get("/api/orders", async (req, res) => {
+    try {
+      const orders = await storage.getOrders();
+      res.json(orders);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch orders" });
+    }
+  });
+
+  app.get("/api/orders/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const order = await storage.getOrder(id);
+      
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+      
+      res.json(order);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch order" });
+    }
+  });
+
+  app.patch("/api/orders/:id/status", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { status } = req.body;
+      
+      if (!status || typeof status !== "string") {
+        return res.status(400).json({ message: "Status is required" });
+      }
+      
+      const order = await storage.updateOrderStatus(id, status);
+      
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+      
+      res.json(order);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update order status" });
+    }
+  });
+
+  const httpServer = createServer(app);
+  return httpServer;
+}
