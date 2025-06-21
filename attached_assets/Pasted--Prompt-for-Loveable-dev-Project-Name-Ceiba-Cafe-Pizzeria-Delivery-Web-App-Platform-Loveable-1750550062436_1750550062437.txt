@@ -1,0 +1,61 @@
+// Prompt for Loveable.dev
+
+Project Name: Ceiba Cafe Pizzeria - Delivery Web App
+
+Platform: Loveable.dev
+
+Goal: Build a beautiful, modern delivery app for Ceiba Cafe Pizzeria, using mobile-first design, with a transparent UI, parallax effects, rounded edges, a stylish topbar and bottom navbar, and WhatsApp ordering integration.
+
+Reference: https://ceiba-pizzeria-vibes.lovable.app/
+
+---
+
+Pages:
+
+1. **Home**
+   - Hero section with parallax background image (use a pizza or restaurant photo)
+   - Welcome text: "Authentic Italian Pizza & Caribbean Vibes"
+   - Short description of Ceiba Cafe Pizzeria and location in Perla Marina, Cabarete
+   - Call to Action (CTA): "Order Now" → links to Order page
+
+2. **Menu**
+   - List menu items by category: Pizzas, Pastas, Salads, Drinks
+   - Each item has: image, name, short description, and price
+   - Add-to-cart functionality (cart stored in local storage)
+
+3. **Order**
+   - Shows selected items, quantity, and total
+   - Customer enters name, phone, and (optional) delivery address
+   - Button to confirm order via WhatsApp with auto-generated message containing order summary
+
+4. **About Us**
+   - Short story of Ceiba Cafe Pizzeria
+   - Images of the staff, location, food
+   - Opening hours and services
+
+5. **Contact**
+   - WhatsApp direct chat button
+   - Embedded Google Map
+   - Instagram and Facebook icons
+
+---
+
+**Design Elements:**
+- Transparent UI with background image support
+- Rounded corners on cards and inputs
+- Topbar: logo and hamburger menu
+- Bottom navbar with 4 icons: Home, Menu, Order, Contact
+- Parallax scrolling on homepage and About section
+- Animations using Framer Motion or Loveable’s built-in animation tools
+
+---
+
+**Functionality Requirements:**
+- Responsive mobile-first layout
+- Cart logic without login
+- LocalStorage for cart data persistence
+- WhatsApp integration for orders
+- No backend needed
+- Optional: enable as a PWA (installable on phones)
+
+Use Loveable’s visual editor or code blocks to reflect the warm, island-vibe identity of the brand, while keeping the UX minimal and intuitive. All interactions should feel smooth and fast.
