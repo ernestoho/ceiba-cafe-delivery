@@ -6,6 +6,7 @@ import CartModal from "@/components/cart-modal";
 import FloatingCartButton from "@/components/floating-cart-button";
 import BottomNavigation from "@/components/bottom-navigation";
 import MenuItemCard from "@/components/menu-item-card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { MenuItem } from "@shared/schema";
 
@@ -62,17 +63,16 @@ export default function Menu() {
             {Array.from({ length: 3 }).map((_, i) => (
               <div key={i}>
                 <Skeleton className="h-8 w-48 mb-6" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {Array.from({ length: 4 }).map((_, j) => (
-                    <Card key={j} className="glass-card">
-                      <CardContent className="p-6">
-                        <div className="flex space-x-4">
-                          <Skeleton className="w-24 h-24 rounded-2xl" />
-                          <div className="flex-1">
-                            <Skeleton className="h-6 w-3/4 mb-2" />
-                            <Skeleton className="h-4 w-full mb-3" />
-                            <Skeleton className="h-6 w-20" />
-                          </div>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {Array.from({ length: 8 }).map((_, j) => (
+                    <Card key={j} className="bg-white/10 backdrop-blur-md border-white/20">
+                      <CardContent className="p-4">
+                        <Skeleton className="aspect-square mb-3 rounded-lg" />
+                        <Skeleton className="h-4 w-3/4 mb-2" />
+                        <Skeleton className="h-3 w-full mb-3" />
+                        <div className="flex justify-between items-center">
+                          <Skeleton className="h-4 w-16" />
+                          <Skeleton className="h-8 w-8 rounded-full" />
                         </div>
                       </CardContent>
                     </Card>
