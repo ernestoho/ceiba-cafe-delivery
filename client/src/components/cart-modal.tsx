@@ -45,7 +45,7 @@ export default function CartModal() {
     if (state.items.length === 0) return;
 
     const orderSummary = state.items.map(item => 
-      `${item.quantity}x ${item.menuItem.name} - $${((parseFloat(item.menuItem.price) / 100) * item.quantity).toFixed(2)}`
+      `${item.quantity}x ${item.menuItem.name} - RD$${((parseFloat(item.menuItem.price) / 100) * item.quantity).toFixed(2)}`
     ).join('\n');
 
     const deliveryFee = getDeliveryFee();
@@ -58,9 +58,9 @@ export default function CartModal() {
 ${orderSummary}
 
 📍 *Delivery Location:* ${locationName}
-💰 *Subtotal: $${getSubtotal().toFixed(2)}*
-🚚 *Delivery Fee: ${deliveryFee === 0 ? 'FREE' : '$' + deliveryFee.toFixed(2)}*
-💰 *Total: $${getFinalTotal().toFixed(2)}*
+💰 *Subtotal: RD$${getSubtotal().toFixed(2)}*
+🚚 *Delivery Fee: ${deliveryFee === 0 ? 'FREE' : 'RD$' + deliveryFee.toFixed(2)}*
+💰 *Total: RD$${getFinalTotal().toFixed(2)}*
 
 I'd like to place this order for delivery to ${locationName}.`;
 
@@ -112,7 +112,7 @@ I'd like to place this order for delivery to ${locationName}.`;
                     />
                     <div className="flex-1">
                       <h3 className="font-medium text-foreground">{item.menuItem.name}</h3>
-                      <p className="text-sm text-muted-foreground">${(parseFloat(item.menuItem.price) / 100).toFixed(2)}</p>
+                      <p className="text-sm text-muted-foreground">RD${(parseFloat(item.menuItem.price) / 100).toFixed(2)}</p>
                     </div>
                     <div className="flex items-center space-x-2">
                       <Button
@@ -152,8 +152,8 @@ I'd like to place this order for delivery to ${locationName}.`;
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="perla-marina">Perla Marina (FREE)</SelectItem>
-                    <SelectItem value="cabarete">Cabarete ($100)</SelectItem>
-                    <SelectItem value="sosua">Sosua ($150)</SelectItem>
+                    <SelectItem value="cabarete">Cabarete (RD$100)</SelectItem>
+                    <SelectItem value="sosua">Sosua (RD$150)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -161,19 +161,19 @@ I'd like to place this order for delivery to ${locationName}.`;
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>Subtotal</span>
-                  <span>${getSubtotal().toFixed(2)}</span>
+                  <span>RD${getSubtotal().toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Delivery Fee</span>
                   <span className={getDeliveryFee() === 0 ? "text-green-600 font-semibold" : ""}>
-                    {getDeliveryFee() === 0 ? "FREE" : `$${getDeliveryFee().toFixed(2)}`}
+                    {getDeliveryFee() === 0 ? "FREE" : `RD$${getDeliveryFee().toFixed(2)}`}
                   </span>
                 </div>
                 <Separator />
                 <div className="flex justify-between font-bold text-lg">
                   <span>Total</span>
-                  <span className="tropical-gradient bg-clip-text text-transparent">
-                    ${getFinalTotal().toFixed(2)}
+                  <span className="text-foreground font-bold">
+                    RD${getFinalTotal().toFixed(2)}
                   </span>
                 </div>
               </div>
