@@ -17,8 +17,18 @@ export default function Header({ onSearch }: HeaderProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center space-x-3">
-            <div className="text-2xl font-bold tropical-gradient bg-clip-text text-transparent flex items-center">
-              🌴 Ceiba Cafe Pizzeria
+            <div className="flex items-center space-x-2">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center shadow-lg">
+                <span className="text-white text-xl font-bold">🌳</span>
+              </div>
+              <div className="flex flex-col">
+                <div className="text-xl font-bold tropical-gradient bg-clip-text text-transparent">
+                  Ceiba Cafe
+                </div>
+                <div className="text-sm font-medium text-orange-600">
+                  Pizzeria
+                </div>
+              </div>
             </div>
           </Link>
           
