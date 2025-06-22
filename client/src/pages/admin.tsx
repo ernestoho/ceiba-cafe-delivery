@@ -314,6 +314,7 @@ export default function Admin() {
                 </form>
               </DialogContent>
             </Dialog>
+            </div>
           </div>
         </div>
       </header>

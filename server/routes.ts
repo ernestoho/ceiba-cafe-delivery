@@ -187,6 +187,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin routes for menu management
+  app.post("/api/admin/menu-items", async (req, res) => {
+    try {
+      const menuItem = await storage.createMenuItem(req.body);
+      res.status(201).json(menuItem);
+    } catch (error) {
+      console.error("Error creating menu item:", error);
+      res.status(500).json({ message: "Failed to create menu item" });
+    }
+  });
+
+  app.put("/api/admin/menu-items/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const menuItem = await storage.updateMenuItem(parseInt(id), req.body);
+      if (!menuItem) {
+        return res.status(404).json({ message: "Menu item not found" });
+      }
+      res.json(menuItem);
+    } catch (error) {
+      console.error("Error updating menu item:", error);
+      res.status(500).json({ message: "Failed to update menu item" });
+    }
+  });
+
+  app.delete("/api/admin/menu-items/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const success = await storage.deleteMenuItem(parseInt(id));
+      if (!success) {
+        return res.status(404).json({ message: "Menu item not found" });
+      }
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting menu item:", error);
+      res.status(500).json({ message: "Failed to delete menu item" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

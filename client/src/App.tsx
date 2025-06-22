@@ -11,6 +11,7 @@ import Contact from "@/pages/contact";
 import Restaurant from "@/pages/restaurant";
 import Orders from "@/pages/orders";
 import Profile from "@/pages/profile";
+import Admin from "@/pages/admin";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -23,6 +24,7 @@ function Router() {
       <Route path="/restaurant/:id" component={Restaurant} />
       <Route path="/orders" component={Orders} />
       <Route path="/profile" component={Profile} />
+      <Route path="/admin" component={Admin} />
       <Route component={NotFound} />
     </Switch>
   );
