@@ -4,6 +4,7 @@ import type { CartItem, MenuItem } from "@shared/schema";
 interface CartState {
   items: CartItem[];
   isOpen: boolean;
+  deliveryLocation: string;
 }
 
 type CartAction =
@@ -13,7 +14,8 @@ type CartAction =
   | { type: "CLEAR_CART" }
   | { type: "TOGGLE_CART" }
   | { type: "OPEN_CART" }
-  | { type: "CLOSE_CART" };
+  | { type: "CLOSE_CART" }
+  | { type: "SET_DELIVERY_LOCATION"; payload: string };
 
 const CartContext = createContext<{
   state: CartState;
@@ -89,6 +91,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(cartReducer, {
     items: [],
     isOpen: false,
+    deliveryLocation: "perla-marina",
   });
 
   const addItem = (menuItem: MenuItem, selectedSize?: 'regular' | 'big') => {

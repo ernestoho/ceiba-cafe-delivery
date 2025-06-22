@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { X, Plus, Minus, MessageCircle } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { X, Plus, Minus, MessageCircle, MapPin } from "lucide-react";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "wouter";
+import { useState } from "react";
 
 export default function CartModal() {
   const { 
@@ -17,6 +19,24 @@ export default function CartModal() {
     getTotal
   } = useCart();
   const { toast } = useToast();
+  const [deliveryLocation, setDeliveryLocation] = useState("perla-marina");
+
+  const getDeliveryFee = () => {
+    switch (deliveryLocation) {
+      case "perla-marina":
+        return 0;
+      case "cabarete":
+        return 100;
+      case "sosua":
+        return 150;
+      default:
+        return 0;
+    }
+  };
+
+  const getFinalTotal = () => {
+    return getSubtotal() + getDeliveryFee();
+  };
 
   const handleQuickOrder = () => {
     if (state.items.length === 0) return;
@@ -25,14 +45,21 @@ export default function CartModal() {
       `${item.quantity}x ${item.menuItem.name} - $${(parseFloat(item.menuItem.price) * item.quantity).toFixed(2)}`
     ).join('\n');
 
+    const deliveryFee = getDeliveryFee();
+    const locationName = deliveryLocation === "perla-marina" ? "Perla Marina" : 
+                        deliveryLocation === "cabarete" ? "Cabarete" : "Sosua";
+    
     const message = `🍕 *Quick Order - Ceiba Cafe Pizzeria*
 
 🛒 *Items:*
 ${orderSummary}
 
-💰 *Total: $${getTotal().toFixed(2)}*
+📍 *Delivery Location:* ${locationName}
+💰 *Subtotal: $${getSubtotal().toFixed(2)}*
+🚚 *Delivery Fee: ${deliveryFee === 0 ? 'FREE' : '$' + deliveryFee.toFixed(2)}*
+💰 *Total: $${getFinalTotal().toFixed(2)}*
 
-I'd like to place this order. Please let me know pickup/delivery details.`;
+I'd like to place this order for delivery to ${locationName}.`;
 
     const whatsappUrl = `https://wa.me/18091234567?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
@@ -111,20 +138,39 @@ I'd like to place this order. Please let me know pickup/delivery details.`;
           
           {state.items.length > 0 && (
             <div className="border-t border-white/20 p-4 space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm font-medium">Delivery Location:</span>
+                </div>
+                <Select value={deliveryLocation} onValueChange={setDeliveryLocation}>
+                  <SelectTrigger className="glass-card">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="perla-marina">Perla Marina (FREE)</SelectItem>
+                    <SelectItem value="cabarete">Cabarete ($100)</SelectItem>
+                    <SelectItem value="sosua">Sosua ($150)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>Subtotal</span>
                   <span>${getSubtotal().toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span>Delivery</span>
-                  <span className="text-green-600 font-semibold">Free</span>
+                  <span>Delivery Fee</span>
+                  <span className={getDeliveryFee() === 0 ? "text-green-600 font-semibold" : ""}>
+                    {getDeliveryFee() === 0 ? "FREE" : `$${getDeliveryFee().toFixed(2)}`}
+                  </span>
                 </div>
                 <Separator />
                 <div className="flex justify-between font-bold text-lg">
                   <span>Total</span>
                   <span className="tropical-gradient bg-clip-text text-transparent">
-                    ${getTotal().toFixed(2)}
+                    ${getFinalTotal().toFixed(2)}
                   </span>
                 </div>
               </div>
