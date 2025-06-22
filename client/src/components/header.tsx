@@ -5,6 +5,8 @@ import { MapPin, ShoppingCart, Menu } from "lucide-react";
 import { useCart } from "@/hooks/use-cart";
 import { Link } from "wouter";
 
+import ceibacafelogo from "@assets/ceibacafelogo.png";
+
 interface HeaderProps {
   onSearch?: (query: string) => void;
 }
@@ -19,7 +21,7 @@ export default function Header({ onSearch }: HeaderProps) {
           <Link href="/" className="flex items-center space-x-3">
             <div className="flex items-center space-x-3">
               <img 
-                src="/attached_assets/ceibacafelogo_1750610794929.png" 
+                src={ceibacafelogo} 
                 alt="Ceiba Cafe Logo" 
                 className="h-12 w-auto"
               />
