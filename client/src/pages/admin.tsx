@@ -439,7 +439,7 @@ export default function Admin() {
                     {items.length} items
                   </Badge>
                 </div>
-
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {items.map((item) => (
                     <Card key={item.id} className="bg-white/10 backdrop-blur-md border-white/20 hover:bg-white/20 transition-all duration-300">
@@ -457,7 +457,7 @@ export default function Admin() {
                             </div>
                           )}
                         </div>
-
+                        
                         <div className="space-y-2">
                           <div className="flex items-start justify-between">
                             <h3 className="font-semibold text-gray-900 line-clamp-1">
@@ -477,11 +477,11 @@ export default function Admin() {
                               </Badge>
                             </div>
                           </div>
-
+                          
                           <p className="text-sm text-gray-600 line-clamp-2">
                             {item.description}
                           </p>
-
+                          
                           <div className="flex items-center justify-between">
                             <div className="text-sm font-medium text-orange-600">
                               {item.hasSizeOptions ? (
@@ -490,7 +490,7 @@ export default function Admin() {
                                 <span>DOP {item.price}</span>
                               )}
                             </div>
-
+                            
                             <div className="flex space-x-2">
                               <Button
                                 size="sm"

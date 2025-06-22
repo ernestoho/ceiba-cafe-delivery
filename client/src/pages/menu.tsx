@@ -1,15 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/header";
 import CategoryFilter from "@/components/category-filter";
-import MenuItemCard from "@/components/menu-item-card";
-import { Card, CardContent } from "@/components/ui/card";
-import { useCart } from "@/hooks/use-cart";
-import { type MenuItem } from "@shared/schema";
 import CartModal from "@/components/cart-modal";
 import FloatingCartButton from "@/components/floating-cart-button";
 import BottomNavigation from "@/components/bottom-navigation";
+import MenuItemCard from "@/components/menu-item-card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import type { MenuItem } from "@shared/schema";
 
 export default function Menu() {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -34,7 +33,7 @@ export default function Menu() {
   return (
     <div className="min-h-screen relative">
       <Header />
-
+      
       {/* Hero Section */}
       <section 
         className="relative h-64 md:h-80 flex items-center justify-center parallax-bg"
@@ -57,7 +56,7 @@ export default function Menu() {
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
       />
-
+      
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24">
         {isLoading ? (
           <div className="space-y-8">
@@ -92,7 +91,7 @@ export default function Menu() {
                   </h2>
                   <div className="flex-1 h-px bg-gradient-to-r from-primary/50 to-transparent ml-6" />
                 </div>
-
+                
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {items.map((item) => (
                     <MenuItemCard key={item.id} item={item} />
