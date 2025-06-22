@@ -9,13 +9,15 @@ export default function AdminHeader() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-4">
             <Link href="/admin">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">C</span>
-                </div>
+              <div className="flex items-center space-x-3">
+                <img 
+                  src="/attached_assets/ceibacafelogo_1750610794929.png" 
+                  alt="Ceiba Cafe Logo" 
+                  className="h-10 w-auto"
+                />
                 <div>
-                  <h1 className="text-lg font-bold text-gray-900">Ceiba Admin</h1>
-                  <p className="text-xs text-gray-600">Menu Management</p>
+                  <h1 className="text-lg font-bold text-foreground">Admin Dashboard</h1>
+                  <p className="text-xs text-muted-foreground">Menu Management</p>
                 </div>
               </div>
             </Link>

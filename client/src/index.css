@@ -3,41 +3,43 @@
 @tailwind utilities;
 
 :root {
-  --background: hsla(25, 40%, 96%, 0.9);
-  --foreground: hsl(25, 30%, 15%);
-  --muted: hsla(40, 20%, 92%, 0.8);
-  --muted-foreground: hsl(30, 15%, 45%);
+  --background: hsla(0, 0%, 98%, 0.95);
+  --foreground: hsl(158, 64%, 20%);
+  --muted: hsla(0, 0%, 94%, 0.8);
+  --muted-foreground: hsl(158, 20%, 35%);
   --popover: hsla(0, 0%, 100%, 0.95);
-  --popover-foreground: hsl(25, 30%, 15%);
-  --card: hsla(0, 0%, 100%, 0.85);
-  --card-foreground: hsl(25, 30%, 15%);
-  --border: hsla(30, 20%, 85%, 0.6);
-  --input: hsla(30, 20%, 90%, 0.8);
-  --primary: hsl(28, 85%, 55%);
+  --popover-foreground: hsl(158, 64%, 20%);
+  --card: hsla(0, 0%, 100%, 0.90);
+  --card-foreground: hsl(158, 64%, 20%);
+  --border: hsla(158, 30%, 85%, 0.6);
+  --input: hsla(0, 0%, 96%, 0.8);
+  --primary: hsl(158, 64%, 30%);
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsla(45, 35%, 88%, 0.8);
-  --secondary-foreground: hsl(30, 25%, 20%);
-  --accent: hsla(35, 55%, 85%, 0.8);
-  --accent-foreground: hsl(30, 25%, 20%);
+  --secondary: hsla(158, 20%, 88%, 0.8);
+  --secondary-foreground: hsl(158, 40%, 20%);
+  --accent: hsla(158, 35%, 85%, 0.8);
+  --accent-foreground: hsl(158, 40%, 20%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(28, 85%, 55%);
+  --ring: hsl(158, 64%, 30%);
   --radius: 1rem;
-  --chart-1: hsl(28, 85%, 55%);
-  --chart-2: hsl(134, 61%, 41%);
+  --chart-1: hsl(158, 64%, 30%);
+  --chart-2: hsl(25, 95%, 53%);
   --chart-3: hsl(48, 96%, 53%);
   --chart-4: hsl(221, 83%, 53%);
   --chart-5: hsl(339, 82%, 52%);
-  --sidebar-background: hsla(25, 40%, 96%, 0.9);
-  --sidebar-foreground: hsl(240, 5.3%, 26.1%);
-  --sidebar-primary: hsl(240, 5.9%, 10%);
+  --sidebar-background: hsla(0, 0%, 98%, 0.95);
+  --sidebar-foreground: hsl(158, 64%, 20%);
+  --sidebar-primary: hsl(158, 64%, 30%);
   --sidebar-primary-foreground: hsl(0, 0%, 98%);
-  --sidebar-accent: hsla(240, 4.8%, 95.9%, 0.8);
-  --sidebar-accent-foreground: hsl(240, 5.9%, 10%);
-  --sidebar-border: hsla(220, 13%, 91%, 0.6);
-  --sidebar-ring: hsl(217.2, 91.2%, 59.8%);
-  --success: hsl(134, 61%, 41%);
+  --sidebar-accent: hsla(158, 20%, 95%, 0.8);
+  --sidebar-accent-foreground: hsl(158, 64%, 20%);
+  --sidebar-border: hsla(158, 30%, 91%, 0.6);
+  --sidebar-ring: hsl(158, 64%, 50%);
+  --success: hsl(158, 64%, 30%);
   --success-foreground: hsl(0, 0%, 100%);
+  --ceiba-green: hsl(158, 64%, 30%);
+  --ceiba-orange: hsl(25, 95%, 53%);
 }
 
 .dark {
@@ -122,7 +124,15 @@
 }
 
 .tropical-gradient {
-  background: linear-gradient(135deg, #ff7b3d 0%, #ff9f40 50%, #ffcc33 100%);
+  background: linear-gradient(135deg, var(--ceiba-green) 0%, var(--ceiba-orange) 100%);
+}
+
+.ceiba-gradient {
+  background: linear-gradient(135deg, var(--ceiba-green) 0%, var(--ceiba-orange) 100%);
+}
+
+.ceiba-orange-gradient {
+  background: linear-gradient(135deg, var(--ceiba-orange) 0%, #ff8c42 100%);
 }
 
 .whatsapp-gradient {
