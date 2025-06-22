@@ -22,10 +22,6 @@ export default function Home() {
           <div className="relative text-center text-white z-10 max-w-4xl mx-auto px-6">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               Authentic Italian Pizza
-              <br />
-              <span className="tropical-gradient bg-clip-text text-transparent">
-                Caribbean Vibes
-              </span>
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
               Experience the perfect fusion of authentic Italian cuisine with island flavors 
