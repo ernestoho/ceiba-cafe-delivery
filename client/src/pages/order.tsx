@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/header";
 import BottomNavigation from "@/components/bottom-navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
-import { Plus, Minus, Trash2, MessageCircle } from "lucide-react";
+import { Plus, Minus, Trash2, MessageCircle, MapPin, Loader2 } from "lucide-react";
 import { useCart } from "@/hooks/use-cart";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "wouter";
@@ -17,6 +17,8 @@ export default function Order() {
   const [customerPhone, setCustomerPhone] = useState("");
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [specialInstructions, setSpecialInstructions] = useState("");
+  const [userLocation, setUserLocation] = useState<{lat: number, lng: number, address: string} | null>(null);
+  const [loadingLocation, setLoadingLocation] = useState(false);
   
   const { 
     state, 
@@ -30,10 +32,86 @@ export default function Order() {
   
   const { toast } = useToast();
 
+  // Get user's location on component mount
+  useEffect(() => {
+    requestLocation();
+  }, []);
+
+  const requestLocation = async () => {
+    if (!navigator.geolocation) {
+      toast({
+        title: "Location not supported",
+        description: "Your browser doesn't support location services",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setLoadingLocation(true);
+    
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        
+        // Use coordinates directly - simple and reliable
+        const coords = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+        setUserLocation({
+          lat: latitude,
+          lng: longitude,
+          address: coords
+        });
+        setDeliveryAddress(coords);
+        
+        toast({
+          title: "Location captured",
+          description: "Your coordinates have been added to the delivery details",
+        });
+        
+        setLoadingLocation(false);
+      },
+      (error) => {
+        console.error('Geolocation error:', error);
+        setLoadingLocation(false);
+        
+        let errorMessage = "Unable to get your location";
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage = "Location access denied. Please enable location permissions.";
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMessage = "Location information unavailable.";
+            break;
+          case error.TIMEOUT:
+            errorMessage = "Location request timed out.";
+            break;
+        }
+        
+        toast({
+          title: "Location Error",
+          description: errorMessage,
+          variant: "destructive"
+        });
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 300000
+      }
+    );
+  };
+
   const generateWhatsAppMessage = () => {
     const orderSummary = state.items.map(item => 
       `${item.quantity}x ${item.menuItem.name} - $${(parseFloat(item.menuItem.price) * item.quantity).toFixed(2)}`
     ).join('\n');
+
+    const locationInfo = userLocation ? 
+      `📍 *Location Coordinates:*
+Latitude: ${userLocation.lat.toFixed(6)}
+Longitude: ${userLocation.lng.toFixed(6)}
+Google Maps: https://maps.google.com/?q=${userLocation.lat},${userLocation.lng}
+
+` : '';
 
     const message = `🍕 *Ceiba Cafe Pizzeria - New Order*
 
@@ -42,7 +120,7 @@ Name: ${customerName}
 Phone: ${customerPhone}
 ${deliveryAddress ? `Address: ${deliveryAddress}` : 'Pickup Order'}
 
-🛒 *Order Summary:*
+${locationInfo}🛒 *Order Summary:*
 ${orderSummary}
 
 💰 *Total Breakdown:*
@@ -86,7 +164,7 @@ Thank you for choosing Ceiba Cafe Pizzeria! 🌴`;
       return;
     }
 
-    const whatsappUrl = `https://wa.me/18091234567?text=${generateWhatsAppMessage()}`;
+    const whatsappUrl = `https://wa.me/18298688808?text=${generateWhatsAppMessage()}`;
     window.open(whatsappUrl, '_blank');
     
     toast({
@@ -212,14 +290,43 @@ Thank you for choosing Ceiba Cafe Pizzeria! 🌴`;
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="address">Delivery Address (Optional)</Label>
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="address">Delivery Address (Optional)</Label>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={requestLocation}
+                        disabled={loadingLocation}
+                        className="rounded-xl"
+                      >
+                        {loadingLocation ? (
+                          <>
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            Getting location...
+                          </>
+                        ) : (
+                          <>
+                            <MapPin className="h-4 w-4 mr-2" />
+                            Use my location
+                          </>
+                        )}
+                      </Button>
+                    </div>
                     <Input
                       id="address"
                       value={deliveryAddress}
                       onChange={(e) => setDeliveryAddress(e.target.value)}
-                      placeholder="Enter delivery address or leave blank for pickup"
+                      placeholder={loadingLocation ? "Getting your location..." : "Enter delivery address or leave blank for pickup"}
                       className="rounded-xl"
+                      disabled={loadingLocation}
                     />
+                    {userLocation && (
+                      <p className="text-sm text-green-600 flex items-center">
+                        <MapPin className="h-3 w-3 mr-1" />
+                        Location detected and prefilled
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="instructions">Special Instructions</Label>
