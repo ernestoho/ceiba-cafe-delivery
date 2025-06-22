@@ -124,7 +124,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const getSubtotal = () => {
     return state.items.reduce(
-      (total, item) => total + parseFloat(item.menuItem.price) * item.quantity,
+      (total, item) => total + (parseFloat(item.menuItem.price) / 100) * item.quantity,
       0
     );
   };

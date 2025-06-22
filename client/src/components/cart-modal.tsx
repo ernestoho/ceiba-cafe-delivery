@@ -35,14 +35,17 @@ export default function CartModal() {
   };
 
   const getFinalTotal = () => {
-    return getSubtotal() + getDeliveryFee();
+    const subtotal = getSubtotal();
+    const deliveryFee = getDeliveryFee();
+    console.log('Subtotal:', subtotal, 'Delivery Fee:', deliveryFee);
+    return subtotal + deliveryFee;
   };
 
   const handleQuickOrder = () => {
     if (state.items.length === 0) return;
 
     const orderSummary = state.items.map(item => 
-      `${item.quantity}x ${item.menuItem.name} - $${(parseFloat(item.menuItem.price) * item.quantity).toFixed(2)}`
+      `${item.quantity}x ${item.menuItem.name} - $${((parseFloat(item.menuItem.price) / 100) * item.quantity).toFixed(2)}`
     ).join('\n');
 
     const deliveryFee = getDeliveryFee();
@@ -109,7 +112,7 @@ I'd like to place this order for delivery to ${locationName}.`;
                     />
                     <div className="flex-1">
                       <h3 className="font-medium text-foreground">{item.menuItem.name}</h3>
-                      <p className="text-sm text-muted-foreground">${item.menuItem.price}</p>
+                      <p className="text-sm text-muted-foreground">${(parseFloat(item.menuItem.price) / 100).toFixed(2)}</p>
                     </div>
                     <div className="flex items-center space-x-2">
                       <Button
