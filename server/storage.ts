@@ -21,6 +21,11 @@ export interface IStorage {
   getOrders(): Promise<OrderWithItems[]>;
   updateOrderStatus(id: number, status: string): Promise<Order | undefined>;
   
+  // Admin menu management methods
+  createMenuItem(menuItem: InsertMenuItem): Promise<MenuItem>;
+  updateMenuItem(id: number, menuItem: Partial<InsertMenuItem>): Promise<MenuItem | undefined>;
+  deleteMenuItem(id: number): Promise<boolean>;
+  
   // Database initialization
   seedData(): Promise<void>;
 }
@@ -133,6 +138,30 @@ export class DatabaseStorage implements IStorage {
       .where(eq(orders.id, id))
       .returning();
     return updatedOrder || undefined;
+  }
+
+  async createMenuItem(insertMenuItem: InsertMenuItem): Promise<MenuItem> {
+    const [menuItem] = await db
+      .insert(menuItems)
+      .values(insertMenuItem)
+      .returning();
+    return menuItem;
+  }
+
+  async updateMenuItem(id: number, updateData: Partial<InsertMenuItem>): Promise<MenuItem | undefined> {
+    const [updatedMenuItem] = await db
+      .update(menuItems)
+      .set(updateData)
+      .where(eq(menuItems.id, id))
+      .returning();
+    return updatedMenuItem || undefined;
+  }
+
+  async deleteMenuItem(id: number): Promise<boolean> {
+    const result = await db
+      .delete(menuItems)
+      .where(eq(menuItems.id, id));
+    return result.rowCount > 0;
   }
 
   async seedData(): Promise<void> {
