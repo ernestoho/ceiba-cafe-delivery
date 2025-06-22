@@ -1,6 +1,6 @@
 import { restaurants, menuItems, orders, orderItems, type Restaurant, type MenuItem, type Order, type OrderItem, type InsertRestaurant, type InsertMenuItem, type InsertOrder, type InsertOrderItem, type OrderWithItems } from "@shared/schema";
 import { db } from "./db";
-import { eq, like, or, and } from "drizzle-orm";
+import { eq, like, or, and, asc } from "drizzle-orm";
 
 export interface IStorage {
   // Restaurant methods
@@ -55,7 +55,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getMenuItemsByRestaurant(restaurantId: number): Promise<MenuItem[]> {
-    return await db.select().from(menuItems).where(eq(menuItems.restaurantId, restaurantId));
+    return await db.select().from(menuItems).where(eq(menuItems.restaurantId, restaurantId)).orderBy(asc(menuItems.id));
   }
 
   async getMenuItem(id: number): Promise<MenuItem | undefined> {
@@ -66,7 +66,7 @@ export class DatabaseStorage implements IStorage {
   async getMenuItemsByCategory(restaurantId: number, category: string): Promise<MenuItem[]> {
     return await db.select().from(menuItems).where(
       and(eq(menuItems.restaurantId, restaurantId), eq(menuItems.category, category))
-    );
+    ).orderBy(asc(menuItems.id));
   }
 
   async createOrder(insertOrder: InsertOrder): Promise<Order> {
