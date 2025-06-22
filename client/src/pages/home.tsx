@@ -12,17 +12,31 @@ export default function Home() {
       
       <main className="pb-24">
         {/* Hero Section with Video Background */}
-        <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        <section 
+          className="relative h-screen flex items-center justify-center overflow-hidden"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')",
+            backgroundSize: "cover",
+            backgroundPosition: "center"
+          }}
+        >
           <video 
             autoPlay 
             muted 
             loop 
             playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-            src="/attached_assets/Download_1750618775933.mp4"
+            className="absolute inset-0 w-full h-full object-cover z-0"
+            src="/uploads/hero-video.mp4"
+            onError={(e) => {
+              console.log('Video failed to load, using fallback background');
+              e.currentTarget.style.display = 'none';
+            }}
+            onLoadStart={() => {
+              console.log('Video loading started');
+            }}
           />
-          <div className="absolute inset-0 bg-black/50" />
-          <div className="relative text-center text-white z-10 max-w-4xl mx-auto px-6">
+          <div className="absolute inset-0 bg-black/50 z-10" />
+          <div className="relative text-center text-white z-20 max-w-4xl mx-auto px-6">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               Authentic Italian Pizza
             </h1>
