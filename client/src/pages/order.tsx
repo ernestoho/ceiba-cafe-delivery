@@ -223,7 +223,7 @@ Thank you for choosing Ceiba Cafe Pizzeria! 🌴`;
                       />
                       <div className="flex-1">
                         <h3 className="font-semibold text-foreground">{item.menuItem.name}</h3>
-                        <p className="text-sm text-muted-foreground">${item.menuItem.price} each</p>
+                        <p className="text-sm text-muted-foreground">DOP ${item.menuItem.price} each</p>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Button
@@ -352,7 +352,7 @@ Thank you for choosing Ceiba Cafe Pizzeria! 🌴`;
                   <div className="space-y-3">
                     <div className="flex justify-between">
                       <span>Subtotal</span>
-                      <span>${getSubtotal().toFixed(2)}</span>
+                      <span>DOP ${getSubtotal()}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Delivery</span>
@@ -361,8 +361,8 @@ Thank you for choosing Ceiba Cafe Pizzeria! 🌴`;
                     <Separator />
                     <div className="flex justify-between text-xl font-bold">
                       <span>Total</span>
-                      <span className="tropical-gradient bg-clip-text text-transparent">
-                        ${getTotal().toFixed(2)}
+                      <span className="text-foreground font-bold">
+                        DOP ${getTotal()}
                       </span>
                     </div>
                   </div>
