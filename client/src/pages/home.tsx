@@ -26,7 +26,7 @@ export default function Home() {
             loop 
             playsInline
             className="absolute inset-0 w-full h-full object-cover z-0"
-            src="/uploads/hero-video.mp4"
+            src="/uploads/hero-video-new.mp4"
             onError={(e) => {
               console.log('Video failed to load, using fallback background');
               e.currentTarget.style.display = 'none';
