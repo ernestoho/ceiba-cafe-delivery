@@ -27,11 +27,13 @@ export default function Home() {
               Experience the perfect fusion of authentic Italian cuisine with island flavors 
               in the heart of Perla Marina, Cabarete
             </p>
-            <Link href="/menu">
-              <Button size="lg" className="tropical-gradient text-white px-8 py-4 text-lg font-semibold rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all">
-                Order Now 🍕
-              </Button>
-            </Link>
+            <div className="flex justify-center">
+              <Link href="/menu">
+                <Button size="lg" className="tropical-gradient text-white px-8 py-4 text-lg font-semibold rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all">
+                  Order Now 🍕
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
 
