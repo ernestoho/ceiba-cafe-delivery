@@ -15,8 +15,9 @@ Ceiba Cafe Pizzeria is a beautiful, modern delivery web application showcasing a
 
 ### Backend Architecture
 - **Framework**: Express.js with TypeScript
-- **Database**: PostgreSQL with Neon serverless connector
-- **ORM**: Drizzle ORM with Zod for schema validation
+- **Database**: PostgreSQL with Neon serverless connector (now active)
+- **ORM**: Drizzle ORM with Zod for schema validation and automatic migrations
+- **Storage**: DatabaseStorage class replacing in-memory storage with persistent data
 - **Development**: Hot reloading with Vite middleware in development mode
 - **Production**: Compiled with esbuild for Node.js environment
 
@@ -100,3 +101,6 @@ Preferred communication style: Simple, everyday language.
   - Updated menu categories to Pizzas, Pastas, Salads, Drinks
   - Redesigned navigation with Home, Menu, Order, Contact pages
   - Added location details for Perla Marina, Cabarete
+  - Migrated from in-memory storage to PostgreSQL database
+  - Implemented DatabaseStorage with automatic seeding
+  - Added persistent data storage for restaurants, menu items, and orders
