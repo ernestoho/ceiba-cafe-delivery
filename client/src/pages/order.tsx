@@ -125,7 +125,6 @@ ${orderSummary}
 
 💰 *Total Breakdown:*
 Subtotal: $${getSubtotal().toFixed(2)}
-Tax: $${getTax().toFixed(2)}
 ${deliveryAddress ? 'Delivery: Free' : ''}
 *Total: $${getTotal().toFixed(2)}*
 
@@ -354,10 +353,6 @@ Thank you for choosing Ceiba Cafe Pizzeria! 🌴`;
                     <div className="flex justify-between">
                       <span>Subtotal</span>
                       <span>${getSubtotal().toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Tax (8%)</span>
-                      <span>${getTax().toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Delivery</span>

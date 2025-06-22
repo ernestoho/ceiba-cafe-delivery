@@ -20,5 +20,5 @@ export const ORDER_STATUSES = {
   DELIVERED: "delivered",
 } as const;
 
-export const DELIVERY_FEE = 2.99;
-export const TAX_RATE = 0.08;
+export const DELIVERY_FEE = 0; // Free delivery
+// No tax applied to sales

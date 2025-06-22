@@ -142,11 +142,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Restaurant not found" });
       }
       
-      total += parseFloat(restaurant.deliveryFee);
-      
-      // Add tax (8%)
-      const tax = total * 0.08;
-      total += tax;
+      // No delivery fee, no tax - keep original total
 
       // Create order
       const order = await storage.createOrder({

@@ -127,11 +127,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const getTax = () => {
-    return getSubtotal() * 0.08;
+    return 0; // No tax applied
   };
 
   const getTotal = () => {
-    return getSubtotal() + getTax() + 2.99; // Add delivery fee
+    return getSubtotal(); // No tax, no delivery fee
   };
 
   const getTotalItems = () => {

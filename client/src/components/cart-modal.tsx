@@ -117,10 +117,6 @@ I'd like to place this order. Please let me know pickup/delivery details.`;
                   <span>${getSubtotal().toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span>Tax (8%)</span>
-                  <span>${getTax().toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
                   <span>Delivery</span>
                   <span className="text-green-600 font-semibold">Free</span>
                 </div>
