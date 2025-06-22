@@ -44,95 +44,62 @@ export class MemStorage implements IStorage {
   }
 
   private seedData() {
-    // Seed restaurants
+    // Seed Ceiba Cafe Pizzeria
     const restaurantData: InsertRestaurant[] = [
       {
-        name: "Burger Palace",
-        cuisine: "American • Burgers • Fast Food",
-        rating: "4.8",
-        deliveryTime: "25-35 min",
-        deliveryFee: "2.99",
-        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
-        category: "burger",
-        isOpen: true,
-      },
-      {
-        name: "Mama's Italian",
-        cuisine: "Italian • Pasta • Pizza",
-        rating: "4.6",
-        deliveryTime: "30-40 min",
-        deliveryFee: "0.00",
-        image: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
-        category: "pizza",
-        isOpen: true,
-      },
-      {
-        name: "Tokyo Sushi Bar",
-        cuisine: "Japanese • Sushi • Asian",
+        name: "Ceiba Cafe Pizzeria",
+        cuisine: "Italian • Caribbean • Pizza • Pasta",
         rating: "4.9",
-        deliveryTime: "20-30 min",
-        deliveryFee: "1.99",
-        image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
-        category: "sushi",
-        isOpen: true,
-      },
-      {
-        name: "El Mariachi",
-        cuisine: "Mexican • Tacos • Latin",
-        rating: "4.5",
-        deliveryTime: "15-25 min",
-        deliveryFee: "2.49",
-        image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
-        category: "mexican",
-        isOpen: true,
-      },
-      {
-        name: "Green Garden",
-        cuisine: "Healthy • Salads • Vegan",
-        rating: "4.7",
-        deliveryTime: "20-30 min",
-        deliveryFee: "3.49",
-        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
-        category: "healthy",
-        isOpen: true,
-      },
-      {
-        name: "Crispy Corner",
-        cuisine: "American • Fried Chicken • Comfort",
-        rating: "4.4",
-        deliveryTime: "25-35 min",
+        deliveryTime: "30-45 min",
         deliveryFee: "0.00",
-        image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
-        category: "chicken",
+        image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600",
+        category: "pizza",
         isOpen: true,
       },
     ];
 
     restaurantData.forEach((data) => {
-      const restaurant: Restaurant = { ...data, id: this.currentRestaurantId++ };
+      const restaurant: Restaurant = { 
+        ...data, 
+        id: this.currentRestaurantId++,
+        isOpen: data.isOpen ?? true
+      };
       this.restaurants.set(restaurant.id, restaurant);
     });
 
-    // Seed menu items
+    // Seed menu items for Ceiba Cafe Pizzeria
     const menuItemData: InsertMenuItem[] = [
-      // Burger Palace items
-      { restaurantId: 1, name: "Classic Cheeseburger", description: "Beef patty with cheese, lettuce, tomato, onion", price: "12.99", image: "https://images.unsplash.com/photo-1551615593-ef5fe247e8f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "burgers", isAvailable: true },
-      { restaurantId: 1, name: "BBQ Bacon Burger", description: "Beef patty with BBQ sauce, bacon, onion rings", price: "15.99", image: "https://images.unsplash.com/photo-1553979459-d2229ba7433a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "burgers", isAvailable: true },
-      { restaurantId: 1, name: "Chicken Wings", description: "Crispy wings with your choice of sauce", price: "9.99", image: "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "appetizers", isAvailable: true },
+      // Pizzas
+      { restaurantId: 1, name: "Margherita Classica", description: "Fresh mozzarella, San Marzano tomatoes, basil, extra virgin olive oil", price: "18.99", image: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "pizzas", isAvailable: true },
+      { restaurantId: 1, name: "Pepperoni Supreme", description: "Premium pepperoni, mozzarella, tomato sauce", price: "21.99", image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "pizzas", isAvailable: true },
+      { restaurantId: 1, name: "Caribbean Jerk Chicken", description: "Jerk chicken, pineapple, red onions, mozzarella, BBQ sauce", price: "24.99", image: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "pizzas", isAvailable: true },
+      { restaurantId: 1, name: "Quattro Stagioni", description: "Mushrooms, artichokes, ham, olives, mozzarella", price: "22.99", image: "https://images.unsplash.com/photo-1590947132387-155cc02f3212?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "pizzas", isAvailable: true },
+      { restaurantId: 1, name: "Tropical Seafood", description: "Shrimp, calamari, mussels, garlic, white sauce", price: "26.99", image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "pizzas", isAvailable: true },
       
-      // Mama's Italian items
-      { restaurantId: 2, name: "Margherita Pizza", description: "Fresh mozzarella, tomato sauce, basil", price: "16.99", image: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "pizza", isAvailable: true },
-      { restaurantId: 2, name: "Pepperoni Pizza", description: "Pepperoni, mozzarella, tomato sauce", price: "18.99", image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "pizza", isAvailable: true },
-      { restaurantId: 2, name: "Spaghetti Carbonara", description: "Pasta with eggs, cheese, pancetta, black pepper", price: "14.99", image: "https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "pasta", isAvailable: true },
+      // Pastas
+      { restaurantId: 1, name: "Spaghetti Carbonara", description: "Traditional Roman pasta with pancetta, eggs, pecorino", price: "16.99", image: "https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "pastas", isAvailable: true },
+      { restaurantId: 1, name: "Penne Arrabbiata", description: "Spicy tomato sauce with garlic and red peppers", price: "14.99", image: "https://images.unsplash.com/photo-1572441713132-51c75654db73?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "pastas", isAvailable: true },
+      { restaurantId: 1, name: "Fettuccine Alfredo", description: "Creamy parmesan sauce with fresh herbs", price: "15.99", image: "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "pastas", isAvailable: true },
+      { restaurantId: 1, name: "Linguine alle Vongole", description: "Fresh clams in white wine and garlic sauce", price: "19.99", image: "https://images.unsplash.com/photo-1563379091339-03246963d96c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "pastas", isAvailable: true },
       
-      // Tokyo Sushi Bar items
-      { restaurantId: 3, name: "California Roll", description: "Crab, avocado, cucumber", price: "8.99", image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "rolls", isAvailable: true },
-      { restaurantId: 3, name: "Salmon Sashimi", description: "Fresh salmon, 6 pieces", price: "12.99", image: "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "sashimi", isAvailable: true },
-      { restaurantId: 3, name: "Dragon Roll", description: "Shrimp tempura, avocado, eel sauce", price: "15.99", image: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "rolls", isAvailable: true },
+      // Salads
+      { restaurantId: 1, name: "Caesar Salad", description: "Romaine lettuce, parmesan, croutons, Caesar dressing", price: "12.99", image: "https://images.unsplash.com/photo-1546793665-c74683f339c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "salads", isAvailable: true },
+      { restaurantId: 1, name: "Tropical Mango Salad", description: "Mixed greens, mango, avocado, passion fruit vinaigrette", price: "13.99", image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "salads", isAvailable: true },
+      { restaurantId: 1, name: "Caprese Salad", description: "Fresh mozzarella, tomatoes, basil, balsamic glaze", price: "14.99", image: "https://images.unsplash.com/photo-1608897013039-887f21d8c804?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "salads", isAvailable: true },
+      
+      // Drinks
+      { restaurantId: 1, name: "Fresh Coconut Water", description: "Straight from the coconut, naturally refreshing", price: "4.99", image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "drinks", isAvailable: true },
+      { restaurantId: 1, name: "Passion Fruit Juice", description: "Fresh squeezed tropical passion fruit", price: "5.99", image: "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "drinks", isAvailable: true },
+      { restaurantId: 1, name: "Italian Espresso", description: "Authentic Italian espresso, rich and bold", price: "3.99", image: "https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "drinks", isAvailable: true },
+      { restaurantId: 1, name: "Mamajuana Cocktail", description: "Traditional Dominican cocktail with honey and spices", price: "8.99", image: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400", category: "drinks", isAvailable: true },
     ];
 
     menuItemData.forEach((data) => {
-      const menuItem: MenuItem = { ...data, id: this.currentMenuItemId++ };
+      const menuItem: MenuItem = { 
+        ...data, 
+        id: this.currentMenuItemId++,
+        isAvailable: data.isAvailable ?? true
+      };
       this.menuItems.set(menuItem.id, menuItem);
     });
   }
@@ -178,9 +145,10 @@ export class MemStorage implements IStorage {
 
   async createOrder(insertOrder: InsertOrder): Promise<Order> {
     const order: Order = { 
-      ...insertOrder, 
+      ...insertOrder,
       id: this.currentOrderId++,
-      createdAt: new Date()
+      createdAt: new Date(),
+      status: insertOrder.status ?? "confirmed"
     };
     this.orders.set(order.id, order);
     return order;

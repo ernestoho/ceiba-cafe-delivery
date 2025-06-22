@@ -1,140 +1,143 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/header";
-import CategoryFilter from "@/components/category-filter";
-import RestaurantCard from "@/components/restaurant-card";
 import CartModal from "@/components/cart-modal";
 import FloatingCartButton from "@/components/floating-cart-button";
 import BottomNavigation from "@/components/bottom-navigation";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import type { Restaurant } from "@shared/schema";
+import { Link } from "wouter";
 
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const { data: restaurants, isLoading } = useQuery<Restaurant[]>({
-    queryKey: ["/api/restaurants", selectedCategory, searchQuery],
-    queryFn: async () => {
-      const params = new URLSearchParams();
-      if (selectedCategory !== "all") params.append("category", selectedCategory);
-      if (searchQuery) params.append("search", searchQuery);
-      
-      const response = await fetch(`/api/restaurants?${params}`);
-      if (!response.ok) throw new Error("Failed to fetch restaurants");
-      return response.json();
-    },
-  });
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header onSearch={setSearchQuery} />
-      <CategoryFilter 
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-      />
+    <div className="min-h-screen relative">
+      <Header />
       
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24">
-        {/* Hero Banner */}
-        <section className="mb-8">
-          <div 
-            className="relative rounded-2xl overflow-hidden h-48 md:h-64"
-            style={{
-              backgroundImage: "url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=400')",
-              backgroundSize: "cover",
-              backgroundPosition: "center"
-            }}
-          >
-            <div className="absolute inset-0 bg-black bg-opacity-40" />
-            <div className="relative h-full flex items-center">
-              <div className="px-8 text-white">
-                <h1 className="text-3xl md:text-4xl font-bold mb-2">Fast Delivery</h1>
-                <p className="text-lg md:text-xl mb-4">Your favorite food delivered in 30 minutes</p>
-                <Button className="bg-primary hover:bg-primary/90 text-white">
-                  Order Now
-                </Button>
+      <main className="pb-24">
+        {/* Hero Section with Parallax */}
+        <section 
+          className="relative h-screen flex items-center justify-center parallax-bg"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
+          }}
+        >
+          <div className="absolute inset-0 bg-black/50" />
+          <div className="relative text-center text-white z-10 max-w-4xl mx-auto px-6">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+              Authentic Italian Pizza
+              <br />
+              <span className="tropical-gradient bg-clip-text text-transparent">
+                Caribbean Vibes
+              </span>
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+              Experience the perfect fusion of authentic Italian cuisine with island flavors 
+              in the heart of Perla Marina, Cabarete
+            </p>
+            <Link href="/menu">
+              <Button size="lg" className="tropical-gradient text-white px-8 py-4 text-lg font-semibold rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all">
+                Order Now 🍕
+              </Button>
+            </Link>
+          </div>
+        </section>
+
+        {/* About Section */}
+        <section className="py-20 px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+                Welcome to Ceiba Cafe Pizzeria
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                Where traditional Italian recipes meet the vibrant spirit of the Caribbean. 
+                Located in the beautiful Perla Marina of Cabarete, we bring you authentic 
+                wood-fired pizzas, fresh pasta, and tropical cocktails.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+              <div className="text-center glass-card p-8 rounded-3xl">
+                <div className="text-4xl mb-4">🍕</div>
+                <h3 className="text-2xl font-bold mb-4 text-foreground">Authentic Pizza</h3>
+                <p className="text-muted-foreground">
+                  Wood-fired pizzas made with imported Italian ingredients and fresh local toppings
+                </p>
+              </div>
+              
+              <div className="text-center glass-card p-8 rounded-3xl">
+                <div className="text-4xl mb-4">🌴</div>
+                <h3 className="text-2xl font-bold mb-4 text-foreground">Island Fusion</h3>
+                <p className="text-muted-foreground">
+                  Unique Caribbean twists on classic Italian dishes with tropical ingredients
+                </p>
+              </div>
+              
+              <div className="text-center glass-card p-8 rounded-3xl">
+                <div className="text-4xl mb-4">🚚</div>
+                <h3 className="text-2xl font-bold mb-4 text-foreground">Free Delivery</h3>
+                <p className="text-muted-foreground">
+                  Fresh, hot delivery throughout Cabarete and surrounding areas
+                </p>
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* Filter Bar */}
-        <section className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold text-foreground">Restaurants near you</h2>
-          </div>
-          <div className="flex space-x-4 overflow-x-auto pb-2 scrollbar-hide">
-            <Button variant="default" className="flex-shrink-0">
-              Fastest Delivery
-            </Button>
-            <Button variant="outline" className="flex-shrink-0">
-              Rating 4.0+
-            </Button>
-            <Button variant="outline" className="flex-shrink-0">
-              Free Delivery
-            </Button>
-            <Button variant="outline" className="flex-shrink-0">
-              Under $15
-            </Button>
-          </div>
-        </section>
-
-        {/* Restaurant Grid */}
-        <section className="mb-8">
-          {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <Card key={i}>
-                  <Skeleton className="aspect-[4/3] w-full" />
-                  <CardContent className="p-4">
-                    <Skeleton className="h-6 w-3/4 mb-2" />
-                    <Skeleton className="h-4 w-full mb-3" />
-                    <div className="flex justify-between">
-                      <Skeleton className="h-4 w-20" />
-                      <Skeleton className="h-4 w-16" />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : restaurants && restaurants.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {restaurants.map((restaurant) => (
-                <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No restaurants found</p>
-            </div>
-          )}
-        </section>
-
-        {/* Promo Section */}
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold text-foreground mb-6">Today's Deals</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="bg-gradient-to-r from-primary to-primary/80 text-white border-0">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-2">Free Delivery</h3>
-                <p className="mb-4">On orders over $25</p>
-                <Button variant="secondary">
-                  Order Now
+            <div className="text-center">
+              <Link href="/menu">
+                <Button size="lg" className="tropical-gradient text-white px-8 py-4 text-lg rounded-full mr-4">
+                  View Menu
                 </Button>
-              </CardContent>
-            </Card>
+              </Link>
+              <Link href="/contact">
+                <Button size="lg" variant="outline" className="glass-card px-8 py-4 text-lg rounded-full">
+                  Contact Us
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Hours & Location */}
+        <section className="py-20 px-6 glass-card mx-6 rounded-3xl">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-12">
+              Visit Us Today
+            </h2>
             
-            <Card className="bg-gradient-to-r from-green-500 to-emerald-400 text-white border-0">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-2">20% Off</h3>
-                <p className="mb-4">First time users</p>
-                <Button variant="secondary">
-                  Get Code
-                </Button>
-              </CardContent>
-            </Card>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div>
+                <h3 className="text-2xl font-bold mb-6 text-foreground">Opening Hours</h3>
+                <div className="space-y-3 text-lg">
+                  <div className="flex justify-between">
+                    <span>Monday - Thursday</span>
+                    <span>11:00 AM - 10:00 PM</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Friday - Saturday</span>
+                    <span>11:00 AM - 11:00 PM</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Sunday</span>
+                    <span>12:00 PM - 9:00 PM</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-2xl font-bold mb-6 text-foreground">Location</h3>
+                <div className="text-lg space-y-3">
+                  <p>Perla Marina</p>
+                  <p>Cabarete, Dominican Republic</p>
+                  <p className="pt-4">
+                    <a 
+                      href="https://wa.me/18091234567" 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="whatsapp-gradient text-white px-6 py-3 rounded-full inline-flex items-center gap-2 font-semibold hover:shadow-lg transition-all"
+                    >
+                      📱 WhatsApp Us
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>

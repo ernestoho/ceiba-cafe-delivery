@@ -2,7 +2,7 @@
 
 ## Overview
 
-Ceiba is a modern food delivery web application built with React, Express, and TypeScript. The application allows users to browse restaurants, view menus, add items to cart, and place orders. It features a responsive design with mobile-first approach and uses a PostgreSQL database with Drizzle ORM for data management.
+Ceiba Cafe Pizzeria is a beautiful, modern delivery web application showcasing authentic Italian cuisine with Caribbean vibes. Built with React, Express, and TypeScript, the application features a tropical aesthetic with glass morphism UI, parallax effects, and WhatsApp ordering integration. Located in Perla Marina, Cabarete, it offers wood-fired pizzas, fresh pasta, tropical drinks, and delivery services.
 
 ## System Architecture
 
@@ -29,25 +29,27 @@ Ceiba is a modern food delivery web application built with React, Express, and T
 - **Order Items**: Junction table linking orders to menu items with quantities
 
 ### Core Features
-- **Restaurant Discovery**: Browse and search restaurants by category or name
-- **Menu Management**: View categorized menu items with pricing and availability
-- **Shopping Cart**: Add/remove items with quantity management
-- **Order Placement**: Create orders with delivery address and estimated times
-- **Order Tracking**: Real-time order status updates with progress indicators
+- **Home Page**: Parallax hero section with authentic Italian pizza and Caribbean vibes branding
+- **Menu Page**: Categorized menu display (Pizzas, Pastas, Salads, Drinks) with tropical styling
+- **Order Page**: Complete order form with customer details and WhatsApp integration
+- **Contact Page**: Location info, hours, social media links, and embedded map
+- **Shopping Cart**: Transparent glass UI with WhatsApp quick ordering functionality
+- **WhatsApp Ordering**: Auto-generated messages for seamless order placement
 
 ### UI/UX Design
-- **Design System**: shadcn/ui component library with "new-york" style
-- **Responsive Layout**: Mobile-first design with adaptive navigation
-- **Theme Support**: CSS variables for consistent theming with dark mode support
+- **Design System**: Tropical theme with glass morphism effects and warm gradients
+- **Responsive Layout**: Mobile-first design with bottom navigation for mobile devices
+- **Theme Support**: Transparent UI with tropical gradient accents and rounded corners
+- **Visual Effects**: Parallax backgrounds, backdrop blur effects, and smooth transitions
 - **Accessibility**: Radix UI primitives ensure ARIA compliance and keyboard navigation
 
 ## Data Flow
 
-1. **Client Request**: React components fetch data using TanStack Query
-2. **API Layer**: Express routes handle HTTP requests and validation
-3. **Data Access**: Storage layer abstracts database operations (currently in-memory with seed data)
-4. **Response**: JSON data returned to client with error handling
-5. **State Management**: Client updates local state and UI reactively
+1. **Menu Display**: Single restaurant (Ceiba Cafe Pizzeria) with categorized menu items
+2. **Cart Management**: Local state with LocalStorage persistence and real-time updates
+3. **WhatsApp Integration**: Auto-generated order messages sent directly to restaurant
+4. **No Backend Dependency**: Orders processed through WhatsApp without database storage
+5. **State Management**: React Context for cart, TanStack Query for menu data
 
 ## External Dependencies
 
@@ -89,5 +91,12 @@ Preferred communication style: Simple, everyday language.
 
 ## Changelog
 
-Changelog:
-- June 21, 2025. Initial setup
+## Recent Changes
+
+- **June 21, 2025**: Transformed app into Ceiba Cafe Pizzeria
+  - Implemented tropical aesthetic with glass morphism UI
+  - Added WhatsApp ordering integration throughout
+  - Created parallax hero sections and island-vibe branding
+  - Updated menu categories to Pizzas, Pastas, Salads, Drinks
+  - Redesigned navigation with Home, Menu, Order, Contact pages
+  - Added location details for Perla Marina, Cabarete

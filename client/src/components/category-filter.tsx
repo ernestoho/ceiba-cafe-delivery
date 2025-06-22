@@ -12,18 +12,14 @@ export default function CategoryFilter({ selectedCategory, onCategoryChange }: C
     const iconMap: { [key: string]: any } = {
       'utensils': Icons.Utensils,
       'pizza-slice': Icons.Pizza,
-      'hamburger': Icons.Beef,
-      'fish': Icons.Fish,
-      'ice-cream': Icons.IceCream,
+      'coffee': Icons.Coffee,
       'leaf': Icons.Leaf,
-      'pepper-hot': Icons.Flame,
-      'drumstick-bite': Icons.Drumstick,
     };
     return iconMap[iconName] || Icons.Utensils;
   };
 
   return (
-    <section className="bg-white border-b sticky top-16 z-40">
+    <section className="glass-card border-b border-white/20 sticky top-16 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex space-x-6 overflow-x-auto py-4 scrollbar-hide">
           {FOOD_CATEGORIES.map((category) => {
@@ -35,17 +31,13 @@ export default function CategoryFilter({ selectedCategory, onCategoryChange }: C
                 key={category.id}
                 variant="ghost"
                 onClick={() => onCategoryChange(category.id)}
-                className={`flex-shrink-0 flex flex-col items-center space-y-2 h-auto py-2 px-4 ${
+                className={`flex-shrink-0 flex flex-col items-center space-y-2 h-auto py-3 px-6 rounded-2xl transition-all ${
                   isSelected 
-                    ? "text-primary" 
-                    : "text-gray-600 hover:text-primary"
+                    ? "tropical-gradient text-white shadow-lg" 
+                    : "text-muted-foreground hover:text-primary glass-card"
                 }`}
               >
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
-                  isSelected 
-                    ? "bg-primary text-white" 
-                    : "bg-gray-100 hover:bg-primary hover:text-white"
-                }`}>
+                <div className="flex items-center justify-center">
                   <IconComponent className="h-5 w-5" />
                 </div>
                 <span className="text-sm font-medium">{category.name}</span>
