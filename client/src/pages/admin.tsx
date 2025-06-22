@@ -26,6 +26,7 @@ export default function Admin() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [editingItem, setEditingItem] = useState<MenuItem | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [formData, setFormData] = useState<MenuItemFormData>({
     name: "",
     description: "",
@@ -145,6 +146,35 @@ export default function Admin() {
   const handleDelete = (id: number) => {
     if (confirm("Are you sure you want to delete this menu item?")) {
       deleteMutation.mutate(id);
+    }
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    try {
+      const formData_upload = new FormData();
+      formData_upload.append('image', file);
+
+      const response = await fetch('/api/admin/upload-image', {
+        method: 'POST',
+        body: formData_upload,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload image');
+      }
+
+      const { imageUrl } = await response.json();
+      setFormData({ ...formData, image: imageUrl });
+      toast({ title: "Image uploaded successfully", variant: "default" });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      toast({ title: "Failed to upload image", variant: "destructive" });
+    } finally {
+      setUploadingImage(false);
     }
   };
 
@@ -278,14 +308,47 @@ export default function Admin() {
                   )}
 
                   <div>
-                    <Label htmlFor="image">Image URL</Label>
-                    <Input
-                      id="image"
-                      value={formData.image}
-                      onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                      placeholder="https://images.unsplash.com/..."
-                      required
-                    />
+                    <Label htmlFor="image">Image</Label>
+                    <div className="space-y-3">
+                      <Input
+                        id="image-file"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="cursor-pointer"
+                        disabled={uploadingImage}
+                      />
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm text-gray-500">or</span>
+                        <Input
+                          id="image-url"
+                          value={formData.image}
+                          onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                          placeholder="Enter image URL"
+                          className="flex-1"
+                          disabled={uploadingImage}
+                        />
+                      </div>
+                      {uploadingImage && (
+                        <div className="text-sm text-orange-600 flex items-center space-x-2">
+                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-orange-500 border-t-transparent"></div>
+                          <span>Uploading image...</span>
+                        </div>
+                      )}
+                      {formData.image && (
+                        <div className="mt-2">
+                          <img
+                            src={formData.image}
+                            alt="Preview"
+                            className="w-20 h-20 object-cover rounded-lg border"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   <div className="flex items-center space-x-2">
@@ -305,10 +368,10 @@ export default function Admin() {
                     <Button 
                       type="submit" 
                       className="bg-orange-500 hover:bg-orange-600 text-white"
-                      disabled={createMutation.isPending || updateMutation.isPending}
+                      disabled={createMutation.isPending || updateMutation.isPending || uploadingImage}
                     >
                       <Save className="w-4 h-4 mr-2" />
-                      {editingItem ? "Update" : "Create"}
+                      {uploadingImage ? "Uploading..." : editingItem ? "Update" : "Create"}
                     </Button>
                   </div>
                 </form>
