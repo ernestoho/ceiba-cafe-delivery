@@ -20,6 +20,9 @@ import { FOOD_CATEGORIES } from "@/lib/constants";
 
 interface MenuItemFormData extends Omit<InsertMenuItem, 'restaurantId'> {
   id?: number;
+  regularPrice: string;
+  bigPrice: string;
+  hasSizeOptions: boolean;
 }
 
 export default function Admin() {
@@ -54,13 +57,12 @@ export default function Admin() {
 
   const createMutation = useMutation({
     mutationFn: async (data: MenuItemFormData) => {
-      return await apiRequest(`/api/admin/menu-items`, {
-        method: "POST",
-        body: JSON.stringify({ ...data, restaurantId: 1 }),
-      });
+      return await apiRequest("POST", `/api/admin/menu-items`, { ...data, restaurantId: 1 });
     },
     onSuccess: () => {
+      // Invalidate all relevant queries to ensure real-time updates
       queryClient.invalidateQueries({ queryKey: ["/api/restaurants"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/restaurants", 1, "menu"] });
       toast({ title: "Menu item created successfully", variant: "default" });
       resetForm();
     },
@@ -71,13 +73,13 @@ export default function Admin() {
 
   const updateMutation = useMutation({
     mutationFn: async ({ id, ...data }: MenuItemFormData & { id: number }) => {
-      return await apiRequest(`/api/admin/menu-items/${id}`, {
-        method: "PUT",
-        body: JSON.stringify(data),
-      });
+      return await apiRequest("PUT", `/api/admin/menu-items/${id}`, data);
     },
     onSuccess: () => {
+      // Invalidate all relevant queries to ensure real-time updates including images
       queryClient.invalidateQueries({ queryKey: ["/api/restaurants"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/restaurants", 1, "menu"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/menu-items"] });
       toast({ title: "Menu item updated successfully", variant: "default" });
       resetForm();
     },
@@ -88,12 +90,12 @@ export default function Admin() {
 
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
-      return await apiRequest(`/api/admin/menu-items/${id}`, {
-        method: "DELETE",
-      });
+      return await apiRequest("DELETE", `/api/admin/menu-items/${id}`);
     },
     onSuccess: () => {
+      // Invalidate all relevant queries to ensure real-time updates
       queryClient.invalidateQueries({ queryKey: ["/api/restaurants"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/restaurants", 1, "menu"] });
       toast({ title: "Menu item deleted successfully", variant: "default" });
     },
     onError: () => {
@@ -128,7 +130,7 @@ export default function Admin() {
       bigPrice: item.bigPrice || "",
       image: item.image,
       category: item.category,
-      hasSizeOptions: item.hasSizeOptions || false,
+      hasSizeOptions: item.hasSizeOptions ?? false,
       isAvailable: item.isAvailable,
     });
     setIsDialogOpen(true);
@@ -168,8 +170,29 @@ export default function Admin() {
       }
 
       const { imageUrl } = await response.json();
-      setFormData({ ...formData, image: imageUrl });
-      toast({ title: "Image uploaded successfully", variant: "default" });
+      
+      // Update form data with new image URL
+      setFormData(prev => ({ ...prev, image: imageUrl }));
+      
+      // If editing an existing item, immediately update it to show the new image
+      if (editingItem) {
+        const updatedData = { ...formData, image: imageUrl };
+        try {
+          await apiRequest("PUT", `/api/admin/menu-items/${editingItem.id}`, updatedData);
+          
+          // Invalidate queries to refresh the UI immediately
+          queryClient.invalidateQueries({ queryKey: ["/api/restaurants"] });
+          queryClient.invalidateQueries({ queryKey: ["/api/restaurants", 1, "menu"] });
+          queryClient.invalidateQueries({ queryKey: ["/api/menu-items"] });
+          
+          toast({ title: "Image updated successfully", variant: "default" });
+        } catch (updateError) {
+          console.error('Error updating menu item with new image:', updateError);
+          toast({ title: "Image uploaded but failed to update menu item", variant: "destructive" });
+        }
+      } else {
+        toast({ title: "Image uploaded successfully", variant: "default" });
+      }
     } catch (error) {
       console.error('Error uploading image:', error);
       toast({ title: "Failed to upload image", variant: "destructive" });
@@ -265,7 +288,7 @@ export default function Admin() {
                   <div className="flex items-center space-x-2">
                     <Switch
                       id="hasSizeOptions"
-                      checked={formData.hasSizeOptions}
+                      checked={Boolean(formData.hasSizeOptions)}
                       onCheckedChange={(checked) => setFormData({ ...formData, hasSizeOptions: checked })}
                     />
                     <Label htmlFor="hasSizeOptions">Has Size Options (Regular/Big)</Label>
@@ -277,7 +300,7 @@ export default function Admin() {
                         <Label htmlFor="regularPrice">Regular Price (DOP)</Label>
                         <Input
                           id="regularPrice"
-                          value={formData.regularPrice}
+                          value={formData.regularPrice ?? ""}
                           onChange={(e) => setFormData({ ...formData, regularPrice: e.target.value })}
                           placeholder="475"
                           required
@@ -287,7 +310,7 @@ export default function Admin() {
                         <Label htmlFor="bigPrice">Big Price (DOP)</Label>
                         <Input
                           id="bigPrice"
-                          value={formData.bigPrice}
+                          value={formData.bigPrice ?? ""}
                           onChange={(e) => setFormData({ ...formData, bigPrice: e.target.value })}
                           placeholder="825"
                           required
