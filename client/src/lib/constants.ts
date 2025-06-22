@@ -1,9 +1,16 @@
 export const FOOD_CATEGORIES = [
   { id: "all", name: "All", icon: "utensils" },
-  { id: "pizzas", name: "Pizzas", icon: "pizza-slice" },
-  { id: "pastas", name: "Pastas", icon: "utensils" },
-  { id: "salads", name: "Salads", icon: "leaf" },
-  { id: "drinks", name: "Drinks", icon: "coffee" },
+  { id: "pizza", name: "Pizza", icon: "pizza-slice" },
+  { id: "pasta", name: "Pasta", icon: "utensils" },
+  { id: "poke bowl", name: "Poke Bowl", icon: "bowl" },
+  { id: "grilled", name: "Grilled", icon: "flame" },
+  { id: "salad", name: "Salad", icon: "leaf" },
+  { id: "antipasti", name: "Antipasti", icon: "cheese" },
+  { id: "special pizza", name: "Special Pizza", icon: "star" },
+  { id: "dessert", name: "Dessert", icon: "cake" },
+  { id: "drink", name: "Drink", icon: "coffee" },
+  { id: "wine", name: "Wine", icon: "wine" },
+  { id: "liquor", name: "Liquor", icon: "glass" },
 ] as const;
 
 export const ORDER_STATUSES = {

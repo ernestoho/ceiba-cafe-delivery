@@ -19,9 +19,12 @@ export const menuItems = pgTable("menu_items", {
   restaurantId: integer("restaurant_id").notNull().references(() => restaurants.id),
   name: text("name").notNull(),
   description: text("description").notNull(),
-  price: decimal("price", { precision: 6, scale: 2 }).notNull(),
+  price: text("price").notNull(),
+  regularPrice: text("regular_price"),
+  bigPrice: text("big_price"),
   image: text("image").notNull(),
   category: text("category").notNull(),
+  hasSizeOptions: boolean("has_size_options").default(false),
   isAvailable: boolean("is_available").notNull().default(true),
 });
 
@@ -75,6 +78,7 @@ export type OrderItem = typeof orderItems.$inferSelect;
 export type CartItem = {
   menuItem: MenuItem;
   quantity: number;
+  selectedSize?: 'regular' | 'big'; // For items with size options
 };
 
 export type OrderWithItems = Order & {

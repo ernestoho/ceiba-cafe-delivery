@@ -1,0 +1,120 @@
+Category	Item	Price
+Pizza	Margherita	475 / 825
+Pizza	Pepperoni	580 / 975
+Pizza	Four Cheese	625 / 1125
+Pizza	Hawaiian	630 / 1150
+Pizza	Diablo	690 / 1280
+Pizza	Dome	650 /1190
+Pizza	Siciliana	625 /1125
+Pizza	Napoli	575 / 990
+Pizza	Ham	580 / 975
+Pizza	Sausage	580 / 975
+Pizza	Prosciutto	725 / 1350
+Pizza	Capricciosa	650 / 1200
+Pizza	Four Seasons	650 / 1200
+Pizza	Vegetarian	650 / 1200
+Pizza	Tuna & Onion	625 / 1150
+Pizza	Bomba	650 /1200
+Pizza	Completa	725 /1350
+Pizza	Italiana	690 / 1280
+Pizza	Meat Lovers	725 /1350
+Pizza	Ham Mushroom	625 /1150
+Pizza	Bresaola	750 /1400
+Pizza	Porcini & Bresaola	775 /1450
+Pizza	Gorgonzola & Spinach	625 /1150
+Pizza	Chicken & Corn	625 /1150
+Pizza	Chicken & Veggies	690 /1290
+Pizza	Pesto	750 /1400
+Pizza	Pizza Che Non C’É	775 /1450
+Pizza	Frutti Di Mare	800 / 1510
+Pizza	Walnuts	660 / 1220
+Pizza	Truffle Burrata	725 / 1350
+Pizza	Speck	740 / 1390
+Pizza	Mortadella	740 /1390
+Pizza	Soppressata	725 / 1350
+Pizza	Garlic	550 / 1000
+Pizza	Burrata	850 / 1610
+Pizza	Porcini	790 / 1490
+Pasta	Lasagna Bolognese	650
+Pasta	Gnocchi	650
+Pasta	Ravioli (various fillings)	720
+Pasta	Tagliatelle (fresh pasta)	690
+Pasta	Penne & Spaghetti	650
+Poke Bowl	Smoke Salmon	690
+Poke Bowl	Feta	640
+Poke Bowl	Mexican	640
+Poke Bowl	Shrimps	690
+Poke Bowl	Vegan	640
+Poke Bowl	Mahi-Mahi	790
+Grilled	Grilled Shrimp with Salad and Rice	1290
+Grilled	Schnitzel with Potatoes and Salad	790
+Grilled	Chicken Fingers with Fries	690
+Grilled	Churrasco with Potatoes and Rice	1600
+Grilled	Grilled Beef with 4 Cheese or Mushroom Sauce	1090
+Grilled	Sliced Beef with Rucola and Parmesan	990
+Grilled	Grilled Salmon Steak or Mahi-Mahi Fillet	990
+Grilled	Rib-Eye Angus with Salad and Rice	1900
+Salad	Green Salad	450
+Salad	Mixed Salad	550
+Salad	Mixed Salad Tuna	650
+Salad	Caprese Salad	550
+Salad	Greek Salad	550
+Salad	Pizza Bowl Mixed Salad	650
+Antipasti	Bresaola Rolls Stuffed With Goat’s Cheese	690
+Antipasti	Bruschetta	550
+Antipasti	Carpaccio of Salmon, Tuna & Octopus	790
+Antipasti	Beef Carpaccio	790
+Antipasti	Truffle Burrata with Prosciutto	790
+Antipasti	Mixed Antipasto Platter	750 /1290
+Special Pizza	Ceiba Star (4 Mini Calzone)	790
+Special Pizza	Flower (6 Mini Calzone)	850
+Special Pizza	Cornucopia (Calzone-Pizza Fusion)	725
+Special Pizza	Panuozzo (Stuffed Sandwich)	725
+Special Pizza	Cornicione (Margherita w/ Stuffed Crust)	880
+Special Pizza	Calzone (3 Ingredients)	725
+Special Pizza	Fried Pizza with Prosciutto	750
+Dessert	Chocolate Mousse	350
+Dessert	Tiramisu	390
+Dessert	Chocolate Brownie w/ Ice Cream	350
+Dessert	Pannacotta (Caramel or Chocolate)	350
+Dessert	Pannacotta (Berries or Pistachio)	390
+Dessert	Nutella Pizza	590
+Dessert	Stuffed Fruit with Ice-Cream	350
+Drink	Presidente/Bohemia Small	250
+Drink	Presidente/Bohemia Medium	325
+Drink	Imported Beers (Bud, Stella, etc.)	300
+Drink	Cuba Libre / Santo Libre	250
+Drink	Vodka (Chinola/Cranberry/Tonic)	300
+Drink	Gin Tonic (Gordon's / Tanqueray)	300 / 400
+Drink	Red and White Wine by the Glass	280
+Drink	Fresh Juice (Lemon / Passion Fruit)	200
+Drink	Fresh Juice Frozen	250
+Drink	Soft Drinks	125
+Drink	Water	70
+Drink	Italian Water	260
+Drink	Cappuccino	140
+Drink	Espresso	100
+Drink	Decaf Espresso	120
+Wine	Nero D'Avola–Syrah	1750
+Wine	Montepulciano	1850
+Wine	Merlot	1900
+Wine	Cabernet	1900
+Wine	Valpolicella	2500
+Wine	Barbera D'Alba	2500
+Wine	Chianti	2500
+Wine	Cattaratto	1750
+Wine	Chardonnay	1850
+Wine	Pinot Grigio	2000
+Wine	Verdicchio	1950
+Wine	Pinot Bianco	2500
+Wine	Falanghina	2000
+Wine	Prosecco	1800
+Liquor	Liquirizia	250
+Liquor	Averna / Sambuca Molinari	300
+Liquor	Grappa / Grappa Barricata	300 / 350
+Liquor	Montenegro / Branca Menta	350
+Liquor	Rum Doble Reserva	300
+Liquor	Rum Leyenda - Imperial	400
+Liquor	Jack Daniel's	400
+Liquor	Black Label	500
+Liquor	Ron Gran Anejo	250

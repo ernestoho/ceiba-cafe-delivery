@@ -5,17 +5,12 @@ import CategoryFilter from "@/components/category-filter";
 import CartModal from "@/components/cart-modal";
 import FloatingCartButton from "@/components/floating-cart-button";
 import BottomNavigation from "@/components/bottom-navigation";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import MenuItemCard from "@/components/menu-item-card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Plus } from "lucide-react";
-import { useCart } from "@/hooks/use-cart";
 import type { MenuItem } from "@shared/schema";
 
 export default function Menu() {
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const { addItem } = useCart();
 
   const { data: menuItems, isLoading } = useQuery<MenuItem[]>({
     queryKey: ["/api/restaurants", 1, "menu", selectedCategory],
@@ -97,50 +92,9 @@ export default function Menu() {
                   <div className="flex-1 h-px bg-gradient-to-r from-primary/50 to-transparent ml-6" />
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {items.map((item) => (
-                    <Card key={item.id} className="glass-card hover:shadow-xl transition-all duration-300 group">
-                      <CardContent className="p-6">
-                        <div className="flex space-x-4">
-                          <div className="relative overflow-hidden rounded-2xl flex-shrink-0">
-                            <img 
-                              src={item.image} 
-                              alt={item.name}
-                              className="w-24 h-24 object-cover group-hover:scale-110 transition-transform duration-300"
-                            />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-start justify-between mb-2">
-                              <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
-                                {item.name}
-                              </h3>
-                              {item.isAvailable && (
-                                <Badge className="bg-green-100 text-green-800 border-green-200">
-                                  Available
-                                </Badge>
-                              )}
-                            </div>
-                            <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
-                              {item.description}
-                            </p>
-                            <div className="flex items-center justify-between">
-                              <span className="text-2xl font-bold tropical-gradient bg-clip-text text-transparent">
-                                ${item.price}
-                              </span>
-                              <Button 
-                                size="sm"
-                                onClick={() => addItem(item)}
-                                className="tropical-gradient text-white rounded-full px-4 hover:shadow-lg transition-all"
-                                disabled={!item.isAvailable}
-                              >
-                                <Plus className="h-4 w-4 mr-1" />
-                                Add
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                    <MenuItemCard key={item.id} item={item} />
                   ))}
                 </div>
               </div>

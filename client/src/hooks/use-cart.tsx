@@ -7,7 +7,7 @@ interface CartState {
 }
 
 type CartAction =
-  | { type: "ADD_ITEM"; payload: MenuItem }
+  | { type: "ADD_ITEM"; payload: { menuItem: MenuItem; selectedSize?: 'regular' | 'big' } }
   | { type: "REMOVE_ITEM"; payload: number }
   | { type: "UPDATE_QUANTITY"; payload: { id: number; quantity: number } }
   | { type: "CLEAR_CART" }
@@ -18,7 +18,7 @@ type CartAction =
 const CartContext = createContext<{
   state: CartState;
   dispatch: React.Dispatch<CartAction>;
-  addItem: (menuItem: MenuItem) => void;
+  addItem: (menuItem: MenuItem, selectedSize?: 'regular' | 'big') => void;
   removeItem: (id: number) => void;
   updateQuantity: (id: number, quantity: number) => void;
   clearCart: () => void;
@@ -34,24 +34,22 @@ const CartContext = createContext<{
 function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case "ADD_ITEM": {
-      const existingItem = state.items.find(
-        (item) => item.menuItem.id === action.payload.id
+      const { menuItem, selectedSize } = action.payload;
+      const existingItemIndex = state.items.findIndex(
+        (item) => 
+          item.menuItem.id === menuItem.id && 
+          item.selectedSize === selectedSize
       );
-      
-      if (existingItem) {
-        return {
-          ...state,
-          items: state.items.map((item) =>
-            item.menuItem.id === action.payload.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          ),
-        };
+
+      if (existingItemIndex > -1) {
+        const updatedItems = [...state.items];
+        updatedItems[existingItemIndex].quantity += 1;
+        return { ...state, items: updatedItems };
       }
-      
+
       return {
         ...state,
-        items: [...state.items, { menuItem: action.payload, quantity: 1 }],
+        items: [...state.items, { menuItem, quantity: 1, selectedSize }],
       };
     }
     case "REMOVE_ITEM":
@@ -93,8 +91,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     isOpen: false,
   });
 
-  const addItem = (menuItem: MenuItem) => {
-    dispatch({ type: "ADD_ITEM", payload: menuItem });
+  const addItem = (menuItem: MenuItem, selectedSize?: 'regular' | 'big') => {
+    dispatch({ type: "ADD_ITEM", payload: { menuItem, selectedSize } });
   };
 
   const removeItem = (id: number) => {
