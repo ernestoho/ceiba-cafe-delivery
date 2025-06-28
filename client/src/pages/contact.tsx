@@ -90,19 +90,8 @@ export default function Contact() {
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex justify-between">
-                    <span className="font-medium">Monday</span>
-                    <span>11:00 AM - 10:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
                     <span className="font-medium">Monday - Sunday</span>
                     <span>12:00 PM - 10:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Sunday</span>
-                    <span>12:00 PM - 9:00 PM</span>
-                  </div>
-                  <div className="pt-4 text-sm text-muted-foreground">
-                    Kitchen closes 30 minutes before closing time
                   </div>
                 </div>
               </CardContent>
