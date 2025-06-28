@@ -90,7 +90,7 @@ export default function Contact() {
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex justify-between">
-                    <span className="font-medium">Monday - Thursday</span>
+                    <span className="font-medium">Monday</span>
                     <span>11:00 AM - 10:00 PM</span>
                   </div>
                   <div className="flex justify-between">
