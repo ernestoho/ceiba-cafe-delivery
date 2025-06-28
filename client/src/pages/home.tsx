@@ -9,7 +9,6 @@ export default function Home() {
   return (
     <div className="min-h-screen relative">
       <Header />
-      
       <main className="pb-24">
         {/* Hero Section with Video Background */}
         <section 
@@ -110,7 +109,7 @@ export default function Home() {
                 />
                 <div className="relative z-10">
                   <div className="text-4xl mb-4">🚚</div>
-                  <h3 className="text-2xl font-bold mb-4 text-foreground">Free Delivery</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-foreground">Fast Delivery</h3>
                   <p className="text-muted-foreground">
                     Fresh, hot delivery throughout Cabarete and surrounding areas
                   </p>
@@ -184,7 +183,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-
       <CartModal />
       <FloatingCartButton />
       <BottomNavigation />
