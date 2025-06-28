@@ -8,7 +8,6 @@ export default function Contact() {
   return (
     <div className="min-h-screen relative">
       <Header />
-      
       {/* Hero Section */}
       <section 
         className="relative h-64 md:h-80 flex items-center justify-center parallax-bg"
@@ -26,7 +25,6 @@ export default function Contact() {
           </p>
         </div>
       </section>
-      
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-24">
         
         {/* WhatsApp CTA */}
@@ -131,9 +129,7 @@ export default function Contact() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-green-600 hover:underline"
-                  >
-                    +1 (809) 123-4567
-                  </a>
+                  >+1 (829) 868-8808</a>
                 </div>
                 <div>
                   <p className="font-medium">Email</p>
@@ -235,7 +231,6 @@ export default function Contact() {
           </div>
         </div>
       </main>
-
       <BottomNavigation />
     </div>
   );
