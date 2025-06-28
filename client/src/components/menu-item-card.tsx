@@ -51,10 +51,12 @@ export default function MenuItemCard({ item }: MenuItemCardProps) {
             <img
               src={item.image}
               alt={item.name}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           </div>
-          
+
           <div className="space-y-2">
             <div className="flex items-start justify-between gap-2">
               <h3 className="font-semibold text-gray-900 line-clamp-2 text-sm">
@@ -66,16 +68,16 @@ export default function MenuItemCard({ item }: MenuItemCardProps) {
                 </Badge>
               )}
             </div>
-            
+
             <p className="text-xs text-gray-600 line-clamp-2">
               {item.description}
             </p>
-            
+
             <div className="flex items-center justify-between">
               <span className="font-bold text-orange-600">
                 {getPriceDisplay()}
               </span>
-              
+
               <Button
                 size="sm"
                 onClick={handleQuickAdd}
@@ -96,12 +98,12 @@ export default function MenuItemCard({ item }: MenuItemCardProps) {
               Choose Size - {item.name}
             </DialogTitle>
           </DialogHeader>
-          
+
           <div className="space-y-4">
             <p className="text-sm text-gray-600">
               {item.description}
             </p>
-            
+
             <div className="space-y-3">
               <div 
                 className={`p-3 rounded-lg border-2 cursor-pointer transition-colors ${
@@ -116,7 +118,7 @@ export default function MenuItemCard({ item }: MenuItemCardProps) {
                   <span className="font-bold text-orange-600">${item.regularPrice}</span>
                 </div>
               </div>
-              
+
               <div 
                 className={`p-3 rounded-lg border-2 cursor-pointer transition-colors ${
                   selectedSize === 'big' 
@@ -131,7 +133,7 @@ export default function MenuItemCard({ item }: MenuItemCardProps) {
                 </div>
               </div>
             </div>
-            
+
             <Button 
               onClick={handleAddToCart}
               className="w-full bg-orange-500 hover:bg-orange-600 text-white"

@@ -4,9 +4,12 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertOrderSchema, insertOrderItemSchema } from "@shared/schema";
 import { z } from "zod";
-import multer from "multer";
-import path from "path";
-import fs from "fs";
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { optimizeImage } from './image-optimizer.js';
 
 const createOrderRequestSchema = z.object({
   restaurantId: z.number(),
@@ -56,7 +59,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/restaurants", async (req, res) => {
     try {
       const { category, search } = req.query;
-      
+
       let restaurants;
       if (search && typeof search === "string") {
         restaurants = await storage.searchRestaurants(search);
@@ -65,7 +68,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else {
         restaurants = await storage.getRestaurants();
       }
-      
+
       res.json(restaurants);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch restaurants" });
@@ -76,11 +79,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const id = parseInt(req.params.id);
       const restaurant = await storage.getRestaurant(id);
-      
+
       if (!restaurant) {
         return res.status(404).json({ message: "Restaurant not found" });
       }
-      
+
       res.json(restaurant);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch restaurant" });
@@ -92,14 +95,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const restaurantId = parseInt(req.params.id);
       const { category } = req.query;
-      
+
       let menuItems;
       if (category && typeof category === "string") {
         menuItems = await storage.getMenuItemsByCategory(restaurantId, category);
       } else {
         menuItems = await storage.getMenuItemsByRestaurant(restaurantId);
       }
-      
+
       res.json(menuItems);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch menu items" });
@@ -110,11 +113,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const id = parseInt(req.params.id);
       const menuItem = await storage.getMenuItem(id);
-      
+
       if (!menuItem) {
         return res.status(404).json({ message: "Menu item not found" });
       }
-      
+
       res.json(menuItem);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch menu item" });
@@ -125,7 +128,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/orders", async (req, res) => {
     try {
       const orderData = createOrderRequestSchema.parse(req.body);
-      
+
       // Calculate total
       let total = 0;
       for (const item of orderData.items) {
@@ -141,7 +144,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!restaurant) {
         return res.status(400).json({ message: "Restaurant not found" });
       }
-      
+
       // No delivery fee, no tax - keep original total
 
       // Create order
@@ -189,11 +192,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const id = parseInt(req.params.id);
       const order = await storage.getOrder(id);
-      
+
       if (!order) {
         return res.status(404).json({ message: "Order not found" });
       }
-      
+
       res.json(order);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch order" });
@@ -204,17 +207,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const id = parseInt(req.params.id);
       const { status } = req.body;
-      
+
       if (!status || typeof status !== "string") {
         return res.status(400).json({ message: "Status is required" });
       }
-      
+
       const order = await storage.updateOrderStatus(id, status);
-      
+
       if (!order) {
         return res.status(404).json({ message: "Order not found" });
       }
-      
+
       res.json(order);
     } catch (error) {
       res.status(500).json({ message: "Failed to update order status" });
@@ -227,11 +230,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!req.file) {
         return res.status(400).json({ message: "No image file provided" });
       }
+
+      const originalPath = req.file.path;
       
+      // Optimize the uploaded image in place
+      const optimizedPath = optimizeImage(originalPath);
+
       const imageUrl = `/uploads/${req.file.filename}`;
       res.json({ imageUrl });
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Error processing image:", error);
       res.status(500).json({ message: "Failed to upload image" });
     }
   });
