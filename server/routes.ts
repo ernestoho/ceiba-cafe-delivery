@@ -232,16 +232,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const originalPath = req.file.path;
-      const optimizedFilename = `optimized-${req.file.filename.replace(/\.[^.]+$/, '.jpg')}`;
-      const optimizedPath = path.join(uploadsDir, optimizedFilename);
+      
+      // Optimize the uploaded image in place
+      const optimizedPath = optimizeImage(originalPath);
 
-      // Optimize the uploaded image
-      await optimizeImage(originalPath, optimizedPath);
-
-      // Delete the original unoptimized file
-      fs.unlinkSync(originalPath);
-
-      const imageUrl = `/uploads/${optimizedFilename}`;
+      const imageUrl = `/uploads/${req.file.filename}`;
       res.json({ imageUrl });
     } catch (error) {
       console.error("Error processing image:", error);
