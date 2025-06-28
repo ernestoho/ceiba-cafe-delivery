@@ -157,7 +157,7 @@ export default function Contact() {
               <CardContent>
                 <div className="flex space-x-4">
                   <a 
-                    href="https://instagram.com/ceibacafepizzeria"
+                    href="https://www.instagram.com/ceiba_cafe_e_pizzeria"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full hover:shadow-lg transition-all"
@@ -165,14 +165,13 @@ export default function Contact() {
                     <Instagram className="h-6 w-6" />
                   </a>
                   <a 
-                    href="https://facebook.com/ceibacafepizzeria"
+                    href="https://web.facebook.com/ceibacafe/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-full hover:shadow-lg transition-all"
                   >
                     <Facebook className="h-6 w-6" />
                   </a>
-                  
                 </div>
                 <div className="mt-6 text-sm text-muted-foreground">
                   <p>Follow us for daily specials, behind-the-scenes content, and the latest updates from our kitchen!</p>
