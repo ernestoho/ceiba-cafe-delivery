@@ -118,9 +118,7 @@ export default function Contact() {
               <CardContent className="space-y-4">
                 <div>
                   <p className="font-medium">Phone</p>
-                  <a href="tel:+18091234567" className="text-primary hover:underline">
-                    +1 (809) 123-4567
-                  </a>
+                  <a href="tel:+18091234567" className="text-primary hover:underline">+1 (829) 868-8808</a>
                 </div>
                 <div>
                   <p className="font-medium">WhatsApp</p>
