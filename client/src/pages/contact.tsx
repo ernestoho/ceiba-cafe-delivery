@@ -12,7 +12,9 @@ export default function Contact() {
       <section 
         className="relative h-64 md:h-80 flex items-center justify-center parallax-bg"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=800')"
+          backgroundImage: "url('/uploads/restaurant-background.jpeg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center"
         }}
       >
         <div className="absolute inset-0 bg-black/60" />
