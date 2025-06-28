@@ -137,7 +137,7 @@ export default function Home() {
         <section 
           className="relative py-20 px-6 mx-6 rounded-3xl overflow-hidden"
           style={{
-            backgroundImage: "url('/attached_assets/IMG_5937_1751130908087.jpeg')",
+            backgroundImage: "url('/uploads/restaurant-background.jpeg')",
             backgroundSize: "cover",
             backgroundPosition: "center"
           }}
