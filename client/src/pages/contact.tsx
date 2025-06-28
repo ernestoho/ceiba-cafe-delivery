@@ -183,14 +183,7 @@ export default function Contact() {
                   >
                     <Facebook className="h-6 w-6" />
                   </a>
-                  <a 
-                    href="https://wa.me/18091234567"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center w-12 h-12 whatsapp-gradient text-white rounded-full hover:shadow-lg transition-all"
-                  >
-                    <MessageCircle className="h-6 w-6" />
-                  </a>
+                  
                 </div>
                 <div className="mt-6 text-sm text-muted-foreground">
                   <p>Follow us for daily specials, behind-the-scenes content, and the latest updates from our kitchen!</p>
