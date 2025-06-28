@@ -137,7 +137,9 @@ export default function Home() {
         <section 
           className="relative py-20 px-6 mx-6 rounded-3xl overflow-hidden"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
+            backgroundImage: "url('/attached_assets/IMG_5937_1751130908087.jpeg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center"
           }}
         >
           <div className="absolute inset-0 bg-black/60" />
