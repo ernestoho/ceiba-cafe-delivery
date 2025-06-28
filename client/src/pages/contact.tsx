@@ -95,7 +95,7 @@ export default function Contact() {
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Monday - Sunday</span>
-                    <span>11:00 AM - 11:00 PM</span>
+                    <span>12:00 PM - 10:00 PM</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Sunday</span>
